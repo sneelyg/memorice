@@ -17,7 +17,7 @@ restartbtn.addEventListener("click", () => {
   restartgame();
 });
 
-var cartas = document.querySelectorAll(".col-3");
+var cartas = document.querySelectorAll(".col-2");
 
 const letras = [
   "A",
@@ -37,7 +37,9 @@ const letras = [
   "H",
   "H",
   "I",
-  "I"
+  "I",
+  "J",
+  "J"
 ];
 //
 //
@@ -52,14 +54,14 @@ var contador_exitos;
 var restartgame = () => {
   let control_rand = [];
   contador_exitos = 0;
-  for (let j = 0; j < 18; j++) {
+  for (let j = 0; j < 20; j++) {
     // elimina letras existentes del juego anterior
     if (cartas[j].hasChildNodes()) {
       cartas[j].firstChild.remove();
     }
   }
 
-  for (let i = 0; i < 18; i++) {
+  for (let i = 0; i < 20; i++) {
     //acá recorremos todas las cartas y le asignamos uan letra.
     let randNum = generateRandom();
     while (control_rand.includes(randNum)) {
@@ -74,7 +76,7 @@ var restartgame = () => {
 
       cartas[i].appendChild(H1); //a la carta (o div) se le agrega el
       cartas[i].nodeValue = i;
-      cartas[i].className = " col-3 bg-info rounded  m-1 p-1";
+      cartas[i].className = " col-2 bg-info rounded  m-1 p-1";
       cartas[i].setAttribute("for", i);
       H1.addEventListener("click", juego);
 
@@ -86,24 +88,24 @@ var restartgame = () => {
 };
 
 var generateRandom = () => {
-  return Math.floor(Math.random() * 18);
+  return Math.floor(Math.random() * 20);
 };
 
 function comparar(letra0, letra1, carta0, carta1) {
   if (letra0 === letra1) {
     console.log("son iguales!!");
-    cartas[carta0].className = " col-3 bg-success rounded  m-1 p-1";
-    cartas[carta1].className = " col-3 bg-success rounded  m-1 p-1";
+    cartas[carta0].className = " col-2 bg-success rounded  m-1 p-1";
+    cartas[carta1].className = " col-2 bg-success rounded  m-1 p-1";
     cartas[carta0].firstChild.removeEventListener("click", juego);
     cartas[carta1].firstChild.removeEventListener("click", juego);
     contador_exitos++;
   }
   if (letra0 !== letra1) {
     console.log("son distintas!!");
-    cartas[carta0].className = " col-3 bg-info rounded  m-1 p-1";
-    cartas[carta1].className = " col-3 bg-info rounded  m-1 p-1";
+    cartas[carta0].className = " col-2 bg-info rounded  m-1 p-1";
+    cartas[carta1].className = " col-2 bg-info rounded  m-1 p-1";
   }
-  if (contador_exitos == 9) {
+  if (contador_exitos == 10) {
     alert("Has Ganado!!Felicidades!!");
   }
 
@@ -114,7 +116,7 @@ function comparar(letra0, letra1, carta0, carta1) {
 
 const juego = e => {
   if (contador == 0) {
-    e.target.parentNode.className = " col-3 bg-danger rounded  m-1 p-1"; // Clase estándar celeste es "col-3 bg-info rounded  m-1 p-1"
+    e.target.parentNode.className = " col-2 bg-danger rounded  m-1 p-1"; // Clase estándar celeste es "col-3 bg-info rounded  m-1 p-1"
     contador++;
     aux0 = e.target.innerHTML; //Lee la letra
     carta0 = parseInt(e.target.parentNode.getAttribute("for")); // lee el numero o index de la carta
@@ -123,7 +125,7 @@ const juego = e => {
     console.log(contador);
     console.log(e.target.parentNode);
   } else if (contador == 1) {
-    e.target.parentNode.className = " col-3 bg-danger rounded  m-1 p-1"; // Clase estándar celeste es "col-3 bg-info rounded  m-1 p-1"
+    e.target.parentNode.className = " col-2 bg-danger rounded  m-1 p-1"; // Clase estándar celeste es "col-3 bg-info rounded  m-1 p-1"
     contador++;
     aux1 = e.target.innerHTML; //registra la letra
     carta1 = parseInt(e.target.parentNode.getAttribute("for"));
