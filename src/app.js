@@ -12,7 +12,10 @@ window.onload = function() {
 };
 //declarandovariables importantees: Boton restart, y cada carta
 var restartbtn = document.querySelector("#restartbtn");
-restartbtn.addEventListener("click", restartgame);
+//restartbtn.addEventListener("click", restartgame); //Acá no puedo llamar la función. Si la declaro con paréntesis, deja  tira error y como está, no funciona. Pero es la misma función que se llama en el window.onload, entonces debería funcionar.
+restartbtn.addEventListener("click", () => {
+  restartgame();
+});
 
 var cartas = document.querySelectorAll(".col-3");
 
@@ -36,15 +39,26 @@ const letras = [
   "I",
   "I"
 ];
-
+//
+//
 var contador = 0;
 var carta0;
 var carta1;
 var aux0;
 var aux1;
-var contador_exitos = 0;
+var contador_exitos;
+//
+//
 var restartgame = () => {
   let control_rand = [];
+  contador_exitos = 0;
+  for (let j = 0; j < 18; j++) {
+    // elimina letras existentes del juego anterior
+    if (cartas[j].hasChildNodes()) {
+      cartas[j].firstChild.remove();
+    }
+  }
+
   for (let i = 0; i < 18; i++) {
     //acá recorremos todas las cartas y le asignamos uan letra.
     let randNum = generateRandom();
@@ -60,29 +74,9 @@ var restartgame = () => {
 
       cartas[i].appendChild(H1); //a la carta (o div) se le agrega el
       cartas[i].nodeValue = i;
+      cartas[i].className = " col-3 bg-info rounded  m-1 p-1";
       cartas[i].setAttribute("for", i);
-      H1.addEventListener("click", e => {
-        if (contador == 0) {
-          e.target.parentNode.className = " col-3 bg-danger rounded  m-1 p-1"; // Clase estándar celeste es "col-3 bg-info rounded  m-1 p-1"
-          contador++;
-          aux0 = e.target.innerHTML; //Lee la letra
-          carta0 = parseInt(e.target.parentNode.getAttribute("for")); // lee el numero o index de la carta
-          console.log(aux0);
-          console.log("Numero de CArta  " + carta0);
-          console.log(contador);
-          console.log(e.target.parentNode);
-        } else if (contador == 1) {
-          e.target.parentNode.className = " col-3 bg-danger rounded  m-1 p-1"; // Clase estándar celeste es "col-3 bg-info rounded  m-1 p-1"
-          contador++;
-          aux1 = e.target.innerHTML; //registra la letra
-          carta1 = parseInt(e.target.parentNode.getAttribute("for"));
-          setTimeout(comparar, 1000, aux0, aux1, carta0, carta1);
-          console.log(aux1);
-          console.log("Numero de CArta  " + carta1);
-          console.log(contador);
-          console.log(e.target.parentNode);
-        }
-      });
+      H1.addEventListener("click", juego);
 
       //cartas[i].style.display = "none";
     }
@@ -96,13 +90,15 @@ var generateRandom = () => {
 };
 
 function comparar(letra0, letra1, carta0, carta1) {
-  if (letra0 == letra1) {
+  if (letra0 === letra1) {
     console.log("son iguales!!");
     cartas[carta0].className = " col-3 bg-success rounded  m-1 p-1";
     cartas[carta1].className = " col-3 bg-success rounded  m-1 p-1";
+    cartas[carta0].firstChild.removeEventListener("click", juego);
+    cartas[carta1].firstChild.removeEventListener("click", juego);
     contador_exitos++;
   }
-  if (letra0 != letra1) {
+  if (letra0 !== letra1) {
     console.log("son distintas!!");
     cartas[carta0].className = " col-3 bg-info rounded  m-1 p-1";
     cartas[carta1].className = " col-3 bg-info rounded  m-1 p-1";
@@ -115,3 +111,26 @@ function comparar(letra0, letra1, carta0, carta1) {
   contador = 0;
   return console.log("Comparando");
 }
+
+const juego = e => {
+  if (contador == 0) {
+    e.target.parentNode.className = " col-3 bg-danger rounded  m-1 p-1"; // Clase estándar celeste es "col-3 bg-info rounded  m-1 p-1"
+    contador++;
+    aux0 = e.target.innerHTML; //Lee la letra
+    carta0 = parseInt(e.target.parentNode.getAttribute("for")); // lee el numero o index de la carta
+    console.log(aux0);
+    console.log("Numero de CArta  " + carta0);
+    console.log(contador);
+    console.log(e.target.parentNode);
+  } else if (contador == 1) {
+    e.target.parentNode.className = " col-3 bg-danger rounded  m-1 p-1"; // Clase estándar celeste es "col-3 bg-info rounded  m-1 p-1"
+    contador++;
+    aux1 = e.target.innerHTML; //registra la letra
+    carta1 = parseInt(e.target.parentNode.getAttribute("for"));
+    setTimeout(comparar, 1000, aux0, aux1, carta0, carta1);
+    console.log(aux1);
+    console.log("Numero de CArta  " + carta1);
+    console.log(contador);
+    console.log(e.target.parentNode);
+  }
+};
