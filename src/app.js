@@ -74,12 +74,13 @@ var restartgame = () => {
       H1.src = letras[randNum]; //le asigna una letra desde el arreglo, con el numero random
       H1.className = "text-dark"; //le asigna color, esto debe cambiarse por un display none, pero por ahora si hago eso desaparece el div (se achica mucho)
       H1.height = "145";
+      H1.width = "100";
       H1.style = "display:none";
       cartas[i].appendChild(H1); //a la carta (o div) se le agrega el
       cartas[i].nodeValue = i;
       cartas[i].className = " col-2 bg-info rounded  m-1 p-1";
       cartas[i].setAttribute("for", i);
-      H1.addEventListener("click", juego);
+      cartas[i].addEventListener("click", juego);
 
       //cartas[i].style.display = "none";
     }
@@ -95,16 +96,16 @@ var generateRandom = () => {
 function comparar(letra0, letra1, carta0, carta1) {
   if (letra0 === letra1) {
     console.log("son iguales!!");
-    cartas[carta0].className = " col-2 bg-success rounded  m-1 p-1";
-    cartas[carta1].className = " col-2 bg-success rounded  m-1 p-1";
-    cartas[carta0].firstChild.removeEventListener("click", juego);
-    cartas[carta1].firstChild.removeEventListener("click", juego);
+    //cartas[carta0].className = " col-2 bg-success rounded  m-1 p-1"; //no se ocupa con los gatos
+    //cartas[carta1].className = " col-2 bg-success rounded  m-1 p-1";  //No se ocupa con los gatos
+    cartas[carta0].removeEventListener("click", juego);
+    cartas[carta1].removeEventListener("click", juego);
     contador_exitos++;
   }
   if (letra0 !== letra1) {
     console.log("son distintas!!");
-    cartas[carta0].className = " col-2 bg-info rounded  m-1 p-1";
-    cartas[carta1].className = " col-2 bg-info rounded  m-1 p-1";
+    cartas[carta0].firstChild.style = "display:none";
+    cartas[carta1].firstChild.style = "display:none";
   }
   if (contador_exitos == 10) {
     alert("Has Ganado!!Felicidades!!");
@@ -117,23 +118,24 @@ function comparar(letra0, letra1, carta0, carta1) {
 
 const juego = e => {
   if (contador == 0) {
-    e.target.parentNode.className = " col-2 bg-danger rounded  m-1 p-1"; // Clase estándar celeste es "col-3 bg-info rounded  m-1 p-1"
+    e.target.firstChild.style = "display:block"; // Clase estándar celeste es "col-2 bg-info rounded  m-1 p-1"
     contador++;
-    aux0 = e.target.innerHTML; //Lee la letra
-    carta0 = parseInt(e.target.parentNode.getAttribute("for")); // lee el numero o index de la carta
+    aux0 = e.target.firstChild.src; //Lee la letra
+    carta0 = parseInt(e.target.getAttribute("for")); // lee el numero o index de la carta
     console.log(aux0);
     console.log("Numero de CArta  " + carta0);
     console.log(contador);
-    console.log(e.target.parentNode);
+    console.log(e.target.firstChild.src);
   } else if (contador == 1) {
-    e.target.parentNode.className = " col-2 bg-danger rounded  m-1 p-1"; // Clase estándar celeste es "col-3 bg-info rounded  m-1 p-1"
+    e.target.firstChild.style = "display:block"; // Clase estándar celeste es "col-3 bg-info rounded  m-1 p-1"
     contador++;
-    aux1 = e.target.innerHTML; //registra la letra
-    carta1 = parseInt(e.target.parentNode.getAttribute("for"));
+    aux1 = e.target.firstChild.src; //registra la letra
+    carta1 = parseInt(e.target.getAttribute("for"));
     setTimeout(comparar, 1000, aux0, aux1, carta0, carta1);
     console.log(aux1);
     console.log("Numero de CArta  " + carta1);
     console.log(contador);
-    console.log(e.target.parentNode);
+    console.log(e.target.firstChild.src);
   }
 };
+git;
