@@ -20,26 +20,26 @@ restartbtn.addEventListener("click", () => {
 var cartas = document.querySelectorAll(".col-2");
 
 const letras = [
-  "A",
-  "A",
-  "B",
-  "B",
-  "C",
-  "C",
-  "D",
-  "D",
-  "E",
-  "E",
-  "F",
-  "F",
-  "G",
-  "G",
-  "H",
-  "H",
-  "I",
-  "I",
-  "J",
-  "J"
+  "../src/assets/img/cats/gato1.jpeg",
+  "../src/assets/img/cats/gato1.jpeg",
+  "../src/assets/img/cats/gato2.jpeg",
+  "../src/assets/img/cats/gato2.jpeg",
+  "../src/assets/img/cats/gato3.png",
+  "../src/assets/img/cats/gato3.png",
+  "../src/assets/img/cats/gato4.jpeg",
+  "../src/assets/img/cats/gato4.jpeg",
+  "../src/assets/img/cats/gato5.jpeg",
+  "../src/assets/img/cats/gato5.jpeg",
+  "../src/assets/img/cats/gato6.png",
+  "../src/assets/img/cats/gato6.png",
+  "../src/assets/img/cats/gato7.png",
+  "../src/assets/img/cats/gato7.png",
+  "../src/assets/img/cats/gato8.png",
+  "../src/assets/img/cats/gato8.png",
+  "../src/assets/img/cats/gato9.png",
+  "../src/assets/img/cats/gato9.png",
+  "../src/assets/img/cats/gato10.png",
+  "../src/assets/img/cats/gato10.png"
 ];
 //
 //
@@ -70,10 +70,11 @@ var restartgame = () => {
     }
     if (!control_rand.includes(randNum)) {
       control_rand.push(randNum); //registra el numero en el arreglo de control
-      var H1 = document.createElement("h1"); //crea el h1 en que lelva la letra
-      H1.append(letras[randNum]); //le asigna una letra desde el arreglo, con el numero random
+      var H1 = document.createElement("IMG"); //crea el h1 en que lelva la letra
+      H1.src = letras[randNum]; //le asigna una letra desde el arreglo, con el numero random
       H1.className = "text-dark"; //le asigna color, esto debe cambiarse por un display none, pero por ahora si hago eso desaparece el div (se achica mucho)
-
+      H1.height = "145";
+      H1.style = "display:none";
       cartas[i].appendChild(H1); //a la carta (o div) se le agrega el
       cartas[i].nodeValue = i;
       cartas[i].className = " col-2 bg-info rounded  m-1 p-1";
