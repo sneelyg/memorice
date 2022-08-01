@@ -138,4 +138,3 @@ const juego = e => {
     console.log(e.target.firstChild.src);
   }
 };
-git;
